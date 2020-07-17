@@ -1,5 +1,7 @@
 import express from "express";
 
+import { userRoute } from "./routes/users";
+
 // initialize app
 const app = express();
 
@@ -12,6 +14,8 @@ app.get("/", (req, res) => {
     message: "Lean Slack API",
   });
 });
+
+app.use("/users", userRoute);
 
 app.use((req, res) => {
   res.status(404).json({
