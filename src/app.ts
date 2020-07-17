@@ -1,9 +1,13 @@
 import express from "express";
 
 import { userRoute } from "./routes/users";
+import { Socket } from "./utils/socket";
 
 // initialize app
 const app = express();
+
+// initialize socket connection
+export const socket = new Socket(app);
 
 // parse body
 app.use(express.json());
