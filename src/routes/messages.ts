@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { socket } from "../app";
 import { SocketEvents } from "../constants/socket.events";
-import { User } from "../models";
+import { Message } from "../models";
 
-export const userRoute = Router();
+export const messageRoute = Router();
 
-userRoute
+messageRoute
   .get("/", (req, res) => {
     res.status(200).json({
       success: true,
@@ -13,10 +13,10 @@ userRoute
     });
   })
   .post("/", (req, res) => {
-    const user: User = req.body;
-    socket.emit(SocketEvents.ADD_USER, user);
+    const message: Message = req.body;
+    socket.emit(SocketEvents.ADD_MESSAGE, message);
 
     res.status(201).json({
-      success: typeof user === "object",
+      success: typeof message === "object",
     });
   });

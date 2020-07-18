@@ -2,6 +2,7 @@ import express from "express";
 
 import { userRoute } from "./routes/users";
 import { Socket } from "./utils/socket";
+import { messageRoute } from "./routes/messages";
 
 // initialize app
 const app = express();
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRoute);
+app.use("/messages", messageRoute);
 
 app.use((req, res) => {
   res.status(404).json({
