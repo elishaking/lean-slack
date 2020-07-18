@@ -17,7 +17,7 @@ messageRoute
   })
   .post("/", async (req, res) => {
     const message: Message = await messageService.add(req.body);
-    io.emit(SocketEvents.ADD_MESSAGE + message.channel.name, message);
+    io.emit(SocketEvents.ADD_MESSAGE + message.key, message);
 
     res.status(201).json({
       success: true,
@@ -28,6 +28,16 @@ messageRoute
 messageRoute.get("/:channelId", async (req, res) => {
   const channelId = req.params.channelId;
   const messages = await messageService.getByChannelId(channelId);
+
+  res.status(200).json({
+    success: true,
+    data: messages,
+  });
+});
+
+messageRoute.get("users/:key", async (req, res) => {
+  const key = req.params.key;
+  const messages = await messageService.getByKey(key);
 
   res.status(200).json({
     success: true,
