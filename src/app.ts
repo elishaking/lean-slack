@@ -1,8 +1,7 @@
 import express from "express";
 
-import { userRoute } from "./routes/users";
+import { userRoute, channelRoute, messageRoute } from "./routes";
 import { Socket } from "./utils/socket";
-import { messageRoute } from "./routes/messages";
 
 // initialize app
 const app = express();
@@ -21,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRoute);
+app.use("/channels", channelRoute);
 app.use("/messages", messageRoute);
 
 app.use((req, res) => {
