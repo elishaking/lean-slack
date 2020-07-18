@@ -14,6 +14,15 @@ describe("MessageService", () => {
     done();
   });
 
+  it("should get messages by channel id", async (done) => {
+    const messages = await messageService.getByChannelId("id");
+
+    expect(Array.isArray(messages)).toBe(true);
+    expect(messages.length).toEqual(0);
+
+    done();
+  });
+
   it("should add a message", async (done) => {
     const newMessage: Message = {
       text: "Hello, World",

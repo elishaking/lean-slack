@@ -11,6 +11,10 @@ class MessageService {
     return this.messages;
   }
 
+  async getByChannelId(channelId: string) {
+    return this.messages.filter((message) => message.channel.id === channelId);
+  }
+
   async add(message: Message) {
     message.id = this.messages.length.toString();
     this.messages.push(message);

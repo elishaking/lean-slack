@@ -24,3 +24,13 @@ messageRoute
       data: message,
     });
   });
+
+messageRoute.get("/:channelId", async (req, res) => {
+  const channelId = req.params.channelId;
+  const messages = await messageService.getByChannelId(channelId);
+
+  res.status(200).json({
+    success: true,
+    data: messages,
+  });
+});
