@@ -1,22 +1,26 @@
 import { Router } from "express";
-import { socket } from "../app";
+import { io } from "../app";
 import { SocketEvents } from "../constants/socket.events";
 import { Message } from "../models";
+import { messageService } from "../services";
 
 export const messageRoute = Router();
 
 messageRoute
-  .get("/", (req, res) => {
+  .get("/", async (req, res) => {
+    const messages = await messageService.getAll();
+
     res.status(200).json({
       success: true,
-      data: [],
+      data: messages,
     });
   })
-  .post("/", (req, res) => {
-    const message: Message = req.body;
-    socket.emit(SocketEvents.ADD_MESSAGE, message);
+  .post("/", async (req, res) => {
+    const message: Message = await messageService.add(req.body);
+    io.emit(SocketEvents.ADD_MESSAGE + message.channel.name, message);
 
     res.status(201).json({
-      success: typeof message === "object",
+      success: true,
+      data: message,
     });
   });

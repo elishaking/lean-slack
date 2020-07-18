@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { socket } from "../app";
+import { io } from "../app";
 import { SocketEvents } from "../constants/socket.events";
 import { Channel } from "../models";
 
@@ -14,7 +14,7 @@ channelRoute
   })
   .post("/", (req, res) => {
     const channel: Channel = req.body;
-    socket.emit(SocketEvents.ADD_CHANNEL, channel);
+    io.emit(SocketEvents.ADD_CHANNEL, channel);
 
     res.status(201).json({
       success: typeof channel === "object",

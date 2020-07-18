@@ -1,13 +1,30 @@
+import * as http from "http";
 import express from "express";
+import socketIO from "socket.io";
+import helmet from "helmet";
+import cors from "cors";
 
 import { userRoute, channelRoute, messageRoute } from "./routes";
 import { Socket } from "./utils/socket";
 
-// initialize app
+// initialize express app
 const app = express();
 
+// initialize server
+const server = http.createServer(app);
+
+// add security
+app.use(helmet());
+
+// add cors
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
+
 // initialize socket connection
-export const socket = new Socket(app);
+export const io = socketIO(server);
 
 // parse body
 app.use(express.json());
@@ -32,6 +49,6 @@ app.use((req, res) => {
 
 // listen for requests
 if (process.env.NODE_ENV !== "test")
-  app.listen(3000, () => console.log("server running on port 3000"));
+  server.listen(7000, () => console.log("server running on port 7000"));
 
 export default app;
