@@ -1,7 +1,7 @@
 import { User, Channel } from ".";
 
 export interface Message {
-  id: string;
+  id?: string;
   text: string;
   date: number;
   user: User;
