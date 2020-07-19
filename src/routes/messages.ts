@@ -12,7 +12,7 @@ messageRoute
 
     res.status(200).json({
       success: true,
-      data: messages,
+      payload: messages,
     });
   })
   .post("/", async (req, res) => {
@@ -21,7 +21,7 @@ messageRoute
 
     res.status(201).json({
       success: true,
-      data: message,
+      payload: message,
     });
   });
 
@@ -31,7 +31,7 @@ messageRoute.get("/:channelId", async (req, res) => {
 
   res.status(200).json({
     success: true,
-    data: messages,
+    payload: messages,
   });
 });
 
@@ -41,6 +41,6 @@ messageRoute.get("/users/:key", async (req, res) => {
 
   res.status(200).json({
     success: true,
-    data: messages,
+    payload: messages,
   });
 });

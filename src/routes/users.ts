@@ -2,21 +2,25 @@ import { Router } from "express";
 import { io } from "../app";
 import { SocketEvents } from "../constants/socket.events";
 import { User } from "../models";
+import { userService } from "../services";
 
 export const userRoute = Router();
 
 userRoute
-  .get("/", (req, res) => {
+  .get("/", async (req, res) => {
+    const users: User[] = await userService.getAll();
+
     res.status(200).json({
       success: true,
-      data: [],
+      payload: users,
     });
   })
-  .post("/", (req, res) => {
-    const user: User = req.body;
+  .post("/", async (req, res) => {
+    const user: User = await userService.add(req.body);
     io.emit(SocketEvents.ADD_USER, user);
 
     res.status(201).json({
-      success: typeof user === "object",
+      success: true,
+      payload: user,
     });
   });

@@ -13,7 +13,7 @@ export class Socket {
     });
   }
 
-  emit(event: string, data: any) {
+  emit(event: string, payload: any) {
     return this.socket?.broadcast.emit(event, data) || false;
   }
 }
