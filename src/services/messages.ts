@@ -12,7 +12,9 @@ class MessageService {
   }
 
   async getByChannelId(channelId: string) {
-    return this.messages.filter((message) => message.channel.id === channelId);
+    return this.messages.filter((message) =>
+      message.channel ? message.channel.id === channelId : false
+    );
   }
 
   async getByKey(key: string) {

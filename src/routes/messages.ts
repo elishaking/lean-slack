@@ -35,7 +35,7 @@ messageRoute.get("/:channelId", async (req, res) => {
   });
 });
 
-messageRoute.get("users/:key", async (req, res) => {
+messageRoute.get("/users/:key", async (req, res) => {
   const key = req.params.key;
   const messages = await messageService.getByKey(key);
 
