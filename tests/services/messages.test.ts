@@ -52,7 +52,7 @@ describe("MessageService", () => {
     expect(typeof message.user === "object").toBe(true);
     expect(message.user.name).toEqual(message.user.name);
     expect(typeof message.channel === "object").toBe(true);
-    expect(message.channel.name).toEqual(message.channel.name);
+    expect(message.channel?.name).toEqual(message.channel?.name);
 
     done();
   });
