@@ -1,22 +1,34 @@
 import { Router } from "express";
+
 import { io } from "../app";
 import { SocketEvents } from "../constants/socket.events";
 import { IChannel } from "../models";
+import { channelService } from "../services/channels";
 
 export const channelRoute = Router();
 
 channelRoute
-  .get("/", (req, res) => {
+  .get("/", async (req, res) => {
+    const channels: IChannel[] = await channelService.getAll();
+
     res.status(200).json({
       success: true,
-      payload: [],
+      payload: channels,
     });
   })
-  .post("/", (req, res) => {
-    const channel: IChannel = req.body;
+  .post("/", async (req, res) => {
+    // const { isValid, errors } = validateChannel(req.body);
+    // if (!isValid)
+    //   return res.status(400).json({
+    //     success: true,
+    //     payload: errors,
+    //   });
+
+    const channel: IChannel = await channelService.add(req.body);
     io.emit(SocketEvents.ADD_CHANNEL, channel);
 
     res.status(201).json({
-      success: typeof channel === "object",
+      success: true,
+      payload: channel,
     });
   });
