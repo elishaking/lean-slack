@@ -3,6 +3,7 @@ import { io } from "../app";
 import { SocketEvents } from "../constants/socket.events";
 import { IUser } from "../models";
 import { userService } from "../services";
+import { validateUser } from "../validation";
 
 export const userRoute = Router();
 
@@ -16,6 +17,13 @@ userRoute
     });
   })
   .post("/", async (req, res) => {
+    const { isValid, errors } = validateUser(req.body);
+    if (!isValid)
+      return res.status(400).json({
+        success: true,
+        payload: errors,
+      });
+
     const user: IUser = await userService.add(req.body);
     io.emit(SocketEvents.ADD_USER, user);
 
