@@ -1,4 +1,4 @@
-import { IUser, Channel } from ".";
+import { IUser, IChannel } from ".";
 
 export interface Message {
   id?: string;
@@ -6,7 +6,7 @@ export interface Message {
   text: string;
   date: number;
   user: IUser;
-  channel: Channel | null;
+  channel: IChannel | null;
 }
 
 export class MessageModel {
@@ -14,7 +14,7 @@ export class MessageModel {
     text: string,
     date: number,
     user: IUser,
-    channel: Channel,
+    channel: IChannel,
     id?: string
   ) {}
 

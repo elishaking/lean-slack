@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { io } from "../app";
 import { SocketEvents } from "../constants/socket.events";
-import { Channel } from "../models";
+import { IChannel } from "../models";
 
 export const channelRoute = Router();
 
@@ -13,7 +13,7 @@ channelRoute
     });
   })
   .post("/", (req, res) => {
-    const channel: Channel = req.body;
+    const channel: IChannel = req.body;
     io.emit(SocketEvents.ADD_CHANNEL, channel);
 
     res.status(201).json({
