@@ -4,6 +4,7 @@ import { SocketEvents } from "../constants/socket.events";
 import { IMessage } from "../models";
 import { messageService } from "../services";
 import { logError } from "../utils/error";
+import { validateMessage } from "../validation";
 
 export const messageRoute = Router();
 
@@ -17,6 +18,13 @@ messageRoute
     });
   })
   .post("/", async (req, res) => {
+    const { isValid, errors } = validateMessage(req.body);
+    if (!isValid)
+      return res.status(400).json({
+        success: true,
+        payload: errors,
+      });
+
     try {
       const message: IMessage = await messageService.add(req.body);
       io.emit(SocketEvents.ADD_MESSAGE + message.key, message);
