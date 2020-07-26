@@ -1,11 +1,11 @@
-import { User, Channel } from ".";
+import { IUser, Channel } from ".";
 
 export interface Message {
   id?: string;
   key?: string;
   text: string;
   date: number;
-  user: User;
+  user: IUser;
   channel: Channel | null;
 }
 
@@ -13,7 +13,7 @@ export class MessageModel {
   constructor(
     text: string,
     date: number,
-    user: User,
+    user: IUser,
     channel: Channel,
     id?: string
   ) {}

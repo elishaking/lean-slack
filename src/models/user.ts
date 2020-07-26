@@ -1,10 +1,18 @@
-export interface User {
+import { Schema, Document, model } from "mongoose";
+
+const UserSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+export interface IUser extends Document {
   id?: string;
   name: string;
 }
 
-export class UserModel {
-  constructor(public name: string, public id?: string) {}
-
-  save() {}
-}
+export const UserModel = model<IUser>("IUser", UserSchema);

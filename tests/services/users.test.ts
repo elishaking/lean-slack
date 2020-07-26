@@ -1,5 +1,5 @@
 import { userService } from "../../src/services";
-import { User } from "../../src/models";
+import { IUser } from "../../src/models";
 
 describe("UserService", () => {
   it("should get users", async (done) => {
@@ -12,7 +12,7 @@ describe("UserService", () => {
   });
 
   it("should add a user", async (done) => {
-    const newUser: User = {
+    const newUser: IUser = {
       id: "0",
       name: "King E",
     };

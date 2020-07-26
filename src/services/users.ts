@@ -1,21 +1,14 @@
-import { User } from "../models";
+import { IUser, UserModel } from "../models";
 
 class UserService {
-  users: User[];
-
-  constructor() {
-    this.users = [];
-  }
+  constructor() {}
 
   async getAll() {
-    return this.users;
+    return UserModel.find();
   }
 
-  async add(user: User) {
-    user.id = this.users.length.toString();
-    this.users.push(user);
-
-    return user;
+  async add(user: IUser) {
+    return UserModel.create(user);
   }
 }
 

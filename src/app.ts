@@ -1,9 +1,11 @@
 import * as http from "http";
 import express from "express";
 import socketIO from "socket.io";
+import { connect } from "mongoose";
 import helmet from "helmet";
 import cors from "cors";
 
+import { envVariables } from "./config";
 import { userRoute, channelRoute, messageRoute } from "./routes";
 import { Socket } from "./utils/socket";
 
@@ -22,6 +24,18 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
+
+// initialize database(mongodb) connection
+connect(envVariables.dbUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(({ connection }) => {
+    console.log("Database connected:", connection.db.databaseName);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // initialize socket connection
 export const io = socketIO(server);

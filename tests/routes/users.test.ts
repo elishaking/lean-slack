@@ -1,7 +1,7 @@
 import request from "supertest";
 
 import app from "../../src/app";
-import { User } from "../../src/models";
+import { IUser } from "../../src/models";
 
 describe("GET Endpoints", () => {
   it("should return all users", async (done) => {
@@ -19,7 +19,7 @@ describe("GET Endpoints", () => {
 
 describe("POST Endpoints", () => {
   it("should add new user", async (done) => {
-    const newUser: User = {
+    const newUser: IUser = {
       id: "0",
       name: "King E",
     };
