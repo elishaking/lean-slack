@@ -5,6 +5,7 @@ import { SocketEvents } from "../constants/socket.events";
 import { IChannel } from "../models";
 import { channelService } from "../services/channels";
 import { validateChannel } from "../validation";
+import { logError } from "../utils/error";
 
 export const channelRoute = Router();
 
@@ -34,6 +35,7 @@ channelRoute
         payload: channel,
       });
     } catch (err) {
+      logError(err);
       if (err.name === "MongoError" && err.code === 11000)
         return res.status(400).json({
           success: false,

@@ -29,6 +29,7 @@ app.use(
 connect(envVariables.dbUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 })
   .then(({ connection }) => {
     console.log("Database connected:", connection.db.databaseName);

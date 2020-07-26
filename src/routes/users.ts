@@ -4,6 +4,7 @@ import { SocketEvents } from "../constants/socket.events";
 import { IUser } from "../models";
 import { userService } from "../services";
 import { validateUser } from "../validation";
+import { logError } from "../utils/error";
 
 export const userRoute = Router();
 
@@ -24,11 +25,20 @@ userRoute
         payload: errors,
       });
 
-    const user: IUser = await userService.add(req.body);
-    io.emit(SocketEvents.ADD_USER, user);
+    try {
+      const user: IUser = await userService.add(req.body);
+      io.emit(SocketEvents.ADD_USER, user);
 
-    res.status(201).json({
-      success: true,
-      payload: user,
-    });
+      res.status(201).json({
+        success: true,
+        payload: user,
+      });
+    } catch (err) {
+      logError(err);
+
+      res.status(500).json({
+        success: false,
+        payload: "Could not add user, please try again",
+      });
+    }
   });
