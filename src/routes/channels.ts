@@ -4,6 +4,7 @@ import { io } from "../app";
 import { SocketEvents } from "../constants/socket.events";
 import { IChannel } from "../models";
 import { channelService } from "../services/channels";
+import { validateChannel } from "../validation";
 
 export const channelRoute = Router();
 
@@ -17,18 +18,33 @@ channelRoute
     });
   })
   .post("/", async (req, res) => {
-    // const { isValid, errors } = validateChannel(req.body);
-    // if (!isValid)
-    //   return res.status(400).json({
-    //     success: true,
-    //     payload: errors,
-    //   });
+    const { isValid, errors } = validateChannel(req.body);
+    if (!isValid)
+      return res.status(400).json({
+        success: true,
+        payload: errors,
+      });
 
-    const channel: IChannel = await channelService.add(req.body);
-    io.emit(SocketEvents.ADD_CHANNEL, channel);
+    try {
+      const channel: IChannel = await channelService.add(req.body);
+      io.emit(SocketEvents.ADD_CHANNEL, channel);
 
-    res.status(201).json({
-      success: true,
-      payload: channel,
-    });
+      res.status(201).json({
+        success: true,
+        payload: channel,
+      });
+    } catch (err) {
+      if (err.name === "MongoError" && err.code === 11000)
+        return res.status(400).json({
+          success: false,
+          payload: {
+            name: "A channel with this name already exists",
+          },
+        });
+
+      res.status(500).json({
+        success: false,
+        payload: "Could not add channel, please try again",
+      });
+    }
   });
