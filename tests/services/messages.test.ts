@@ -2,7 +2,7 @@ import request from "supertest";
 
 import app from "../../src/app";
 import { messageService } from "../../src/services";
-import { Message } from "../../src/models";
+import { IMessage } from "../../src/models";
 
 describe("MessageService", () => {
   it("should get messages", async (done) => {
@@ -33,7 +33,7 @@ describe("MessageService", () => {
   });
 
   it("should add a message", async (done) => {
-    const newMessage: Message = {
+    const newMessage: IMessage = {
       text: "Hello, World",
       date: Date.now(),
       user: {

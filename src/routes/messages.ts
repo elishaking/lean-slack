@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { io } from "../app";
 import { SocketEvents } from "../constants/socket.events";
-import { Message } from "../models";
+import { IMessage } from "../models";
 import { messageService } from "../services";
+import { logError } from "../utils/error";
 
 export const messageRoute = Router();
 
@@ -16,13 +17,22 @@ messageRoute
     });
   })
   .post("/", async (req, res) => {
-    const message: Message = await messageService.add(req.body);
-    io.emit(SocketEvents.ADD_MESSAGE + message.key, message);
+    try {
+      const message: IMessage = await messageService.add(req.body);
+      io.emit(SocketEvents.ADD_MESSAGE + message.key, message);
 
-    res.status(201).json({
-      success: true,
-      payload: message,
-    });
+      res.status(201).json({
+        success: true,
+        payload: message,
+      });
+    } catch (err) {
+      logError(err);
+
+      res.status(500).json({
+        success: false,
+        payload: "Could not add message, please try again",
+      });
+    }
   });
 
 messageRoute.get("/:channelId", async (req, res) => {

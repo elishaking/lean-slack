@@ -1,31 +1,22 @@
-import { Message } from "../models";
+import { IMessage, MessageModel } from "../models";
 
 class MessageService {
-  messages: Message[];
-
-  constructor() {
-    this.messages = [];
-  }
+  constructor() {}
 
   async getAll() {
-    return this.messages;
+    return MessageModel.find().lean();
   }
 
   async getByChannelId(channelId: string) {
-    return this.messages.filter((message) =>
-      message.channel ? message.channel.id === channelId : false
-    );
+    return MessageModel.find({ channel: channelId }).lean();
   }
 
   async getByKey(key: string) {
-    return this.messages.filter((message) => message.key === key);
+    return MessageModel.find({ key }).lean();
   }
 
-  async add(message: Message) {
-    message.id = this.messages.length.toString();
-    this.messages.push(message);
-
-    return message;
+  async add(message: IMessage) {
+    return MessageModel.create(message);
   }
 }
 

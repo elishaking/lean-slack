@@ -10,7 +10,7 @@ export const userRoute = Router();
 
 userRoute
   .get("/", async (req, res) => {
-    const users: IUser[] = await userService.getAll();
+    const users = await userService.getAll();
 
     res.status(200).json({
       success: true,

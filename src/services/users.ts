@@ -4,7 +4,7 @@ class UserService {
   constructor() {}
 
   async getAll() {
-    return UserModel.find();
+    return UserModel.find().lean();
   }
 
   async add(user: IUser) {
