@@ -1,5 +1,5 @@
 import { connect, disconnect, Types } from "mongoose";
-import { envVariables } from "../../src/config";
+import { envVariables } from "../src/config";
 
 export const connectDb = () =>
   connect(envVariables.dbUri, {

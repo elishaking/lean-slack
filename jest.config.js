@@ -1,7 +1,8 @@
 module.exports = {
+  testEnvironment: "node",
   roots: ["./"],
   testMatch: [
-    "**/tests/**/*.+(ts|tsx|js)",
+    // "**/tests/**/*.+(ts|tsx|js)",
     "**/?(*.)+(spec|test).+(ts|tsx|js)",
   ],
   transform: {

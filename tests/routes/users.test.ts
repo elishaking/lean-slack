@@ -1,7 +1,7 @@
 import request from "supertest";
 
 import app from "../../src/app";
-import { IUser } from "../../src/models";
+import { userService } from "../../src/services";
 
 describe("GET Endpoints", () => {
   it("should return all users", async (done) => {
@@ -17,21 +17,28 @@ describe("GET Endpoints", () => {
   });
 });
 
+const newUser1: any = {
+  name: "King",
+};
+
 describe("POST Endpoints", () => {
+  afterAll((done) => {
+    userService
+      .clear()
+      .then(() => done())
+      .catch((err) => done(err));
+  });
+
   it("should add new user", async (done) => {
-    const newUser: IUser = {
-      id: "0",
-      name: "King E",
-    };
-    const { status, body } = await request(app).post("/users").send(newUser);
+    const { status, body } = await request(app).post("/users").send(newUser1);
+
     expect(status).toEqual(201);
     expect(typeof body === "object").toBe(true);
     expect(body).toHaveProperty("success");
     expect(body.success).toBe(true);
     expect(body).toHaveProperty("payload");
     expect(typeof body.payload === "object").toBe(true);
-    expect(body.payload.id).toEqual(newUser.id);
-    expect(body.payload.name).toEqual(newUser.name);
+    expect(body.payload.name).toEqual(newUser1.name);
 
     done();
   });

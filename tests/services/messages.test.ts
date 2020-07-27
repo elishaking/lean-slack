@@ -1,10 +1,10 @@
-import * as db from "./db";
+import * as db from "../db";
 import { messageService } from "../../src/services";
 
 describe("MessageService", () => {
   beforeAll((done) => {
     db.connectDb()
-      .then((db) => {
+      .then(() => {
         done();
       })
       .catch((err) => done(err));
