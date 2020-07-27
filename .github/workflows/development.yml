@@ -8,13 +8,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout Repo
         uses: actions/checkout@v2
 
       - name: Setup Nodejs
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: "10.x"
+
+      - name: Start MongoDB v4.0
+        uses: supercharge/mongodb-github-action@1.2.0
+        with:
+          mongodb-version: 4.0
 
       - name: Install packages
         run: yarn install
@@ -23,3 +28,4 @@ jobs:
         run: yarn test
         env:
           CI: true
+          DB_URI_TEST: mongodb://localhost:27017/leanslack_test

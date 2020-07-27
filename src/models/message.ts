@@ -32,7 +32,6 @@ export interface IMessage extends Document {
   id?: string;
   key?: string;
   text: string;
-  date: number;
   user: string;
   channel: string;
 }
