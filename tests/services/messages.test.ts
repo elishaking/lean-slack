@@ -1,21 +1,19 @@
-import request from "supertest";
-
 import * as db from "./db";
-import app from "../../src/app";
 import { messageService } from "../../src/services";
-import { IMessage } from "../../src/models";
 
 describe("MessageService", () => {
   beforeAll((done) => {
     db.connectDb()
-      .then(() => {
+      .then((db) => {
         done();
       })
       .catch((err) => done(err));
   });
 
   afterAll((done) => {
-    db.disconnectDb()
+    messageService
+      .clear()
+      .then(() => db.disconnectDb())
       .then(() => {
         done();
       })

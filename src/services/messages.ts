@@ -18,6 +18,10 @@ class MessageService {
   async add(message: IMessage) {
     return MessageModel.create(message);
   }
+
+  async clear() {
+    return MessageModel.remove({});
+  }
 }
 
 export const messageService = new MessageService();
