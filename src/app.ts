@@ -26,17 +26,18 @@ app.use(
 );
 
 // initialize database(mongodb) connection
-connect(envVariables.dbUri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-})
-  .then(({ connection }) => {
-    console.log("Database connected:", connection.db.databaseName);
+if (envVariables.nodeEnv !== "test")
+  connect(envVariables.dbUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
   })
-  .catch((err) => {
-    console.log(err);
-  });
+    .then(({ connection }) => {
+      console.log("Database connected:", connection.db.databaseName);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
 // initialize socket connection
 export const io = socketIO(server);

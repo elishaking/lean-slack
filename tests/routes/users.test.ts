@@ -5,6 +5,14 @@ import * as db from "../db";
 import { userService } from "../../src/services";
 
 describe("User Route", () => {
+  beforeAll((done) => {
+    db.connectDb()
+      .then(() => {
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
   afterAll((done) => {
     userService
       .clear()

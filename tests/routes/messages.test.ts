@@ -5,6 +5,14 @@ import * as db from "../db";
 import { messageService } from "../../src/services";
 
 describe("Message Route", () => {
+  beforeAll((done) => {
+    db.connectDb()
+      .then(() => {
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
   afterAll((done) => {
     messageService
       .clear()
