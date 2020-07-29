@@ -13,7 +13,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@types/mongoose": "^5.7.32",
+    "@types/mongoose": "^5.7.34",
     "@types/validator": "^13.1.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
