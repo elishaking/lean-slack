@@ -21,7 +21,7 @@
     "helmet": "^3.23.3",
     "mongoose": "^5.10.4",
     "socket.io": "^2.3.0",
-    "validator": "^13.1.1"
+    "validator": "^13.1.17"
   },
   "devDependencies": {
     "@types/cors": "^2.8.6",
